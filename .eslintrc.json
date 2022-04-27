@@ -34,7 +34,7 @@
     "object-shorthand": "off",
     "class-methods-use-this": "off",
     "node/no-unsupported-features/es-syntax": [
-      "error",
+      "warn",
       {
         "version": ">=13.0.0",
         "ignores": [
