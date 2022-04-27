@@ -201,7 +201,7 @@ export default function DataTable({ meetings, serviceBodies }) {
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Day Of Week</TableCell>
+                      <TableCell>Day Of Week</TableCell>
                       <TableCell align="center">In Person</TableCell>
                       <TableCell align="center">Hybrid</TableCell>
                       <TableCell align="center">Virtual</TableCell>
