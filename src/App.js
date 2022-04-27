@@ -38,9 +38,7 @@ function App() {
       <div className="main">
         <Header />
         <Container maxWidth="lg">
-          <h2>
-            Total Meetings in Carolina Region: {meetings.length}
-          </h2>
+          <h2>Total Meetings in Carolina Region: {meetings.length}</h2>
 
           <DataTable meetings={meetings} serviceBodies={serviceBodies} />
         </Container>
