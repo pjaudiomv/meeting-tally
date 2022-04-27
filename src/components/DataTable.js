@@ -298,9 +298,21 @@ export default function DataTable({ meetings, serviceBodies }) {
             <TableCell>Area</TableCell>
             <TableCell align="center">Published</TableCell>
             <TableCell align="center">Unpublished</TableCell>
-            <TableCell align="center">In Person</TableCell>
-            <TableCell align="center">Hybrid</TableCell>
-            <TableCell align="center">Virtual</TableCell>
+            <TableCell align="center">
+              In Person
+              <br />
+              (Published)
+            </TableCell>
+            <TableCell align="center">
+              Hybrid
+              <br />
+              (Published)
+            </TableCell>
+            <TableCell align="center">
+              Virtual
+              <br />
+              (Published)
+            </TableCell>
             <TableCell align="center" style={{ fontWeight: 600 }}>
               Total
             </TableCell>
