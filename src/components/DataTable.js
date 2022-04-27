@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 export default function DataTable({ meetings, serviceBodies }) {
   const rows = [];
@@ -24,19 +25,38 @@ export default function DataTable({ meetings, serviceBodies }) {
   });
 
   const weekdays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    {
+      id: "1",
+      name: "Sunday",
+    },
+    {
+      id: "2",
+      name: "Monday",
+    },
+    {
+      id: "3",
+      name: "Tuesday",
+    },
+    {
+      id: "4",
+      name: "Wednesday",
+    },
+    {
+      id: "5",
+      name: "Thursday",
+    },
+    {
+      id: "6",
+      name: "Friday",
+    },
+    {
+      id: "7",
+      name: "Saturday",
+    },
   ];
 
-  console.log("row", rows);
   function Row({ row }) {
     const [open, setOpen] = React.useState(false);
-
     return (
       <React.Fragment>
         {/* {serviceBodies.map((body) => ( */}
@@ -112,35 +132,63 @@ export default function DataTable({ meetings, serviceBodies }) {
                   <TableHead>
                     <TableRow>
                       <TableCell>Day Of Week</TableCell>
-                      <TableCell>In Person</TableCell>
-                      <TableCell>Hybrid</TableCell>
-                      <TableCell>Virtual</TableCell>
-                      <TableCell>Total</TableCell>
+                      <TableCell align="center">In Person</TableCell>
+                      <TableCell align="center">Hybrid</TableCell>
+                      <TableCell align="center">Virtual</TableCell>
+                      <TableCell align="center" style={{ fontWeight: 600 }}>
+                        Total
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {weekdays.map((day, idx) => (
                       <TableRow key={`weekday-${idx}`}>
                         <TableCell component="th" scope="row">
-                          {day}
+                          {day.name}
                         </TableCell>
-                        <TableCell>
+                        <TableCell align="center">
                           {
                             rows.filter(
                               (pub) =>
+                                pub.published === "1" &&
                                 pub.service_body_bigint === row.id &&
                                 pub.venue_type === "1" &&
-                                pub.weekday_tinyint === "1"
+                                pub.weekday_tinyint === day.id
                             ).length
                           }
                         </TableCell>
-                        {/* <TableCell align="right">
-                            {historyRow.amount}
-                          </TableCell>
-                          <TableCell align="right">
-                            {Math.round(historyRow.amount * row.price * 100) /
-                              100}
-                          </TableCell> */}
+                        <TableCell align="center">
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.published === "1" &&
+                                pub.service_body_bigint === row.id &&
+                                pub.venue_type === "3" &&
+                                pub.weekday_tinyint === day.id
+                            ).length
+                          }
+                        </TableCell>
+                        <TableCell align="center">
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.published === "1" &&
+                                pub.service_body_bigint === row.id &&
+                                pub.venue_type === "2" &&
+                                pub.weekday_tinyint === day.id
+                            ).length
+                          }
+                        </TableCell>
+                        <TableCell align="center" style={{ fontWeight: 600 }}>
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.published === "1" &&
+                                pub.service_body_bigint === row.id &&
+                                pub.weekday_tinyint === day.id
+                            ).length
+                          }
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -153,27 +201,76 @@ export default function DataTable({ meetings, serviceBodies }) {
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Day Of Week</TableCell>
-                      <TableCell>In Person</TableCell>
-                      <TableCell>Hybrid</TableCell>
-                      <TableCell>Virtual</TableCell>
-                      <TableCell>Total</TableCell>
+                      <TableCell align="center">Day Of Week</TableCell>
+                      <TableCell align="center">In Person</TableCell>
+                      <TableCell align="center">Hybrid</TableCell>
+                      <TableCell align="center">Virtual</TableCell>
+                      <TableCell align="center">Unknown</TableCell>
+                      <TableCell align="center">Total</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* {row.history.map((historyRow) => (
-                      <TableRow key={historyRow.date}>
+                    {weekdays.map((day, idx) => (
+                      <TableRow key={`weekday-${idx}`}>
                         <TableCell component="th" scope="row">
-                          {historyRow.date}
+                          {day.name}
                         </TableCell>
-                        <TableCell>{historyRow.customerId}</TableCell>
-                        <TableCell align="right">{historyRow.amount}</TableCell>
-                        <TableCell align="right">
-                          {Math.round(historyRow.amount * row.price * 100) /
-                            100}
+                        <TableCell align="center">
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.published === "0" &&
+                                pub.service_body_bigint === row.id &&
+                                pub.venue_type === "1" &&
+                                pub.weekday_tinyint === day.id
+                            ).length
+                          }
+                        </TableCell>
+                        <TableCell align="center">
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.published === "0" &&
+                                pub.service_body_bigint === row.id &&
+                                pub.venue_type === "3" &&
+                                pub.weekday_tinyint === day.id
+                            ).length
+                          }
+                        </TableCell>
+                        <TableCell align="center">
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.published === "0" &&
+                                pub.service_body_bigint === row.id &&
+                                pub.venue_type === "2" &&
+                                pub.weekday_tinyint === day.id
+                            ).length
+                          }
+                        </TableCell>
+                        <TableCell align="center">
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.published === "0" &&
+                                pub.service_body_bigint === row.id &&
+                                !pub.venue_type &&
+                                pub.weekday_tinyint === day.id
+                            ).length
+                          }
+                        </TableCell>
+                        <TableCell align="center" style={{ fontWeight: 600 }}>
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.published === "0" &&
+                                pub.service_body_bigint === row.id &&
+                                pub.weekday_tinyint === day.id
+                            ).length
+                          }
                         </TableCell>
                       </TableRow>
-                    ))} */}
+                    ))}
                   </TableBody>
                 </Table>
               </Box>
@@ -215,6 +312,64 @@ export default function DataTable({ meetings, serviceBodies }) {
             .map((body) => (
               <Row key={body.id} row={body} />
             ))}
+          <TableRow style={{ backgroundColor: "#282c34" }}>
+            <TableCell>
+              <IconButton aria-label="expand row" size="small">
+                <GroupsIcon style={{ color: "#fff" }} />
+              </IconButton>
+            </TableCell>
+            <TableCell style={{ fontWeight: 600, color: "#fff" }}>
+              Connecticut Region
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontWeight: 600, color: "#fff" }}
+            >
+              {rows.filter((pub) => pub.published === "1").length}
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontWeight: 600, color: "#fff" }}
+            >
+              {rows.filter((pub) => pub.published === "0").length}
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontWeight: 600, color: "#fff" }}
+            >
+              {
+                rows.filter(
+                  (pub) => pub.published === "1" && pub.venue_type === "1"
+                ).length
+              }
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontWeight: 600, color: "#fff" }}
+            >
+              {
+                rows.filter(
+                  (pub) => pub.published === "1" && pub.venue_type === "3"
+                ).length
+              }
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontWeight: 600, color: "#fff" }}
+            >
+              {
+                rows.filter(
+                  (pub) => pub.published === "1" && pub.venue_type === "2"
+                ).length
+              }
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontWeight: 600, color: "#fff" }}
+            >
+              {rows.length}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
