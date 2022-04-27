@@ -23,6 +23,16 @@ export default function DataTable({ meetings, serviceBodies }) {
     });
   });
 
+  const weekdays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
   console.log("row", rows);
   function Row({ row }) {
     const [open, setOpen] = React.useState(false);
@@ -83,25 +93,71 @@ export default function DataTable({ meetings, serviceBodies }) {
               ).length
             }
           </TableCell>
-          <TableCell align="center">
+          <TableCell align="center" style={{ fontWeight: 600 }}>
             {rows.filter((pub) => pub.service_body_bigint === row.id).length}
           </TableCell>
         </TableRow>
         {/* ))} */}
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <TableCell
+            style={{ paddingBottom: 0, paddingTop: 0, width: "100%" }}
+            colSpan={6}
+          >
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
-                  History
+              <Box sx={{ margin: 2 }}>
+                <Typography variant="h6" gutterBottom component="h6">
+                  Published
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Date</TableCell>
-                      <TableCell>Customer</TableCell>
-                      <TableCell align="right">Amount</TableCell>
-                      <TableCell align="right">Total price ($)</TableCell>
+                      <TableCell>Day Of Week</TableCell>
+                      <TableCell>In Person</TableCell>
+                      <TableCell>Hybrid</TableCell>
+                      <TableCell>Virtual</TableCell>
+                      <TableCell>Total</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {weekdays.map((day, idx) => (
+                      <TableRow key={`weekday-${idx}`}>
+                        <TableCell component="th" scope="row">
+                          {day}
+                        </TableCell>
+                        <TableCell>
+                          {
+                            rows.filter(
+                              (pub) =>
+                                pub.service_body_bigint === row.id &&
+                                pub.venue_type === "1" &&
+                                pub.weekday_tinyint === "1"
+                            ).length
+                          }
+                        </TableCell>
+                        {/* <TableCell align="right">
+                            {historyRow.amount}
+                          </TableCell>
+                          <TableCell align="right">
+                            {Math.round(historyRow.amount * row.price * 100) /
+                              100}
+                          </TableCell> */}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+              <Box sx={{ margin: 2 }}>
+                <Typography variant="h6" gutterBottom component="h6">
+                  Unpublished
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Day Of Week</TableCell>
+                      <TableCell>In Person</TableCell>
+                      <TableCell>Hybrid</TableCell>
+                      <TableCell>Virtual</TableCell>
+                      <TableCell>Total</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -129,7 +185,15 @@ export default function DataTable({ meetings, serviceBodies }) {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      sx={{
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+        borderRadius: "10px",
+        marginTop: "2rem",
+        marginBottom: "2rem",
+      }}
+    >
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -140,7 +204,9 @@ export default function DataTable({ meetings, serviceBodies }) {
             <TableCell align="center">In Person</TableCell>
             <TableCell align="center">Hybrid</TableCell>
             <TableCell align="center">Virtual</TableCell>
-            <TableCell align="center">Total</TableCell>
+            <TableCell align="center" style={{ fontWeight: 600 }}>
+              Total
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
